@@ -1,0 +1,2 @@
+# ShiftyBot
+A discord bot
