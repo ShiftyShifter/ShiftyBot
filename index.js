@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const {MessageAttachment, MessageEmbed } = require('discord.js');
 const { prefix, token } = require('./config.json');
 const client = new Discord.Client();
 const PREFIX = '!';
@@ -48,8 +49,12 @@ client.on('message', message =>
     switch(args[0])
     {
         case 'hi':
-            message.channel.send("ho");
             message.react("🤔");
+            //message.reply(message.author.displayAvatarURL());
+            const attachment = new MessageAttachment('https://media.tenor.com/images/f047df15315c12e886d55b68a468e511/tenor.gif');
+            message.reply(attachment);
+            const embed = new MessageEmbed().setTitle('Commands').setColor(0xff0000).setDescription('mesajları temizlemek için !temizle');
+            message.channel.send(embed);
             break;
         case 'bilgi':
             if(args[1] === "versiyon")
@@ -84,6 +89,7 @@ client.on('message', message =>
             message.channel.send(dice.rps());
             break;
     }
+    console.log(message.createdAt);
 });
 
 client.login(token);
