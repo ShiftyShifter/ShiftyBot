@@ -3,13 +3,15 @@ const {MessageAttachment, MessageEmbed } = require('discord.js');
 const { prefix, token } = require('./config.json');
 const client = new Discord.Client();
 const PREFIX = '!';
-
-
+if (typeof localStorage === "undefined" || localStorage === null)
+{
+    var LocalStorage = require('node-localstorage').LocalStorage;
+    localStorage = new LocalStorage('./scratch');
+}   
 
 const murqi = "737786524296282135";
 const komutan = "397443899339309068";
 const pleb = "401430400196411405";
-
 
 var dice =
 {
@@ -88,8 +90,19 @@ client.on('message', message =>
         case 'taşkağıtmakas':
             message.channel.send(dice.rps());
             break;
+        case 'pin':
+            let pinmessage;
+            if(args[1] === pinmessage){
+                message.pin(pinmessage);
+            }   
     }
-    console.log(message.createdAt);
+    //Message Tracker;
+    var existing = localStorage.getItem('messagelogs');
+    var data = existing ? existing + "ID: "+ message.author.username + " Content: " + message.content + " Date: " + message.createdAt+ "\n" : " ";
+    localStorage.setItem('messagelogs', data);
 });
 
 client.login(token);
+
+
+
